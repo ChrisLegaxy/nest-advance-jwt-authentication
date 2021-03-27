@@ -59,7 +59,7 @@ export class UserController {
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)
-  @Delete()
+  @Delete(':id')
   public async deleteUser(@Param('id', ParseUUIDPipe) id: string) {
     await this.userService.delete(id);
   }
