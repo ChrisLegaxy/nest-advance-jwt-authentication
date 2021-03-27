@@ -8,4 +8,12 @@ export class UserRepository extends Repository<User> {
 
     return await this.save(newUser);
   }
+
+  async createAndUpdate(id: string, user: Partial<User>): Promise<User> {
+    const updateUser = await this.create(user);
+
+    await this.update(id, updateUser);
+
+    return await this.findOne(id);
+  }
 }
