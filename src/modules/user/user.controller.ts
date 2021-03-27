@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -21,11 +22,13 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private userService: UserService) {}
 
+  @HttpCode(HttpStatus.OK)
   @Get()
   public async getUsers() {
     return await this.userService.find();
   }
 
+  @HttpCode(HttpStatus.OK)
   @Get(':id')
   public async getUser(@Param('id', ParseUUIDPipe) id: string) {
     return plainToClass(
@@ -53,5 +56,11 @@ export class UserController {
       UserResponseDto,
       await this.userService.update(id, updateBodyDto),
     );
+  }
+
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Delete()
+  public async deleteUser(@Param('id', ParseUUIDPipe) id: string) {
+    await this.userService.delete(id);
   }
 }
