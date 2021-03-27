@@ -1,6 +1,7 @@
 /**
  * * Nest Imports
  */
+import { HttpStatus, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import {
   FastifyAdapter,
@@ -18,6 +19,15 @@ class Server {
     const nestFastifyApplication = await NestFactory.create<NestFastifyApplication>(
       AppModule,
       new FastifyAdapter(),
+    );
+
+    nestFastifyApplication.useGlobalPipes(
+      new ValidationPipe({
+        whitelist: true,
+        transform: true,
+        forbidUnknownValues: false,
+        errorHttpStatusCode: HttpStatus.BAD_REQUEST,
+      }),
     );
 
     /** Set global prefix for all api route */
