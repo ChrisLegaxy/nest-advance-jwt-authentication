@@ -3,8 +3,10 @@ import {
   BeforeInsert,
   BeforeUpdate,
   Column,
+  CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 import * as bcrypt from 'bcryptjs';
@@ -20,8 +22,18 @@ export class User {
   @Column()
   password: string;
 
+  @UpdateDateColumn({ type: 'timestamp with time zone' })
+  updatedAt: Date;
+
+  @CreateDateColumn({ type: 'timestamp with time zone' })
+  createdAt: Date;
+
+  /**
+   * * In order to access function here, instantiate is a must (this.repository.create then save or update)
+   * * Especially look out for update
+   */
   @BeforeInsert()
-  @BeforeUpdate() // need to call createAndSave from repository in order to work (.update won't work)
+  @BeforeUpdate()
   public async hashPasswordBeforeInsert(): Promise<void> {
     if (this.password) {
       this.password = await User.hashPassword(this.password);
