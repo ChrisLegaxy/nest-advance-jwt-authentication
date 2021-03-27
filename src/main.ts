@@ -17,9 +17,7 @@ class Server {
     /** Create nest application instance */
     const nestFastifyApplication = await NestFactory.create<NestFastifyApplication>(
       AppModule,
-      new FastifyAdapter({
-        logger: true,
-      }),
+      new FastifyAdapter(),
     );
 
     /** Set global prefix for all api route */
