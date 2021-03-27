@@ -1,4 +1,8 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { UserCreateBodyDto } from './dto/user.dto';
 import { UserRepository } from './user.repository';
 
@@ -8,6 +12,14 @@ export class UserService {
 
   public async find() {
     return await this.userRepository.find();
+  }
+
+  public async findByIdOrFail(id: string) {
+    try {
+      return await this.userRepository.findOneOrFail(id);
+    } catch (error) {
+      throw new NotFoundException(error.message);
+    }
   }
 
   public async create(createBodyDto: UserCreateBodyDto) {
