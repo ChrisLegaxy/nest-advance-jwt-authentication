@@ -1,4 +1,13 @@
-import { Controller, Get } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+} from '@nestjs/common';
+import { plainToClass } from 'class-transformer';
+import { UserCreateBodyDto, UserResponseDto } from './dto/user.dto';
 import { UserService } from './user.service';
 
 @Controller('users')
@@ -8,5 +17,14 @@ export class UserController {
   @Get()
   public async getUsers() {
     return await this.userService.getUsers();
+  }
+
+  @HttpCode(HttpStatus.CREATED)
+  @Post()
+  public async createUser(@Body() createBodyDto: UserCreateBodyDto) {
+    return plainToClass(
+      UserResponseDto,
+      await this.userService.createUser(createBodyDto),
+    );
   }
 }
