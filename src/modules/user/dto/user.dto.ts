@@ -1,5 +1,11 @@
 import { Exclude, Expose } from 'class-transformer';
-import { IsNotEmpty, IsOptional, IsString, MinLength } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+  MinLength,
+} from 'class-validator';
 
 @Exclude()
 export class UserResponseDto {
@@ -14,6 +20,12 @@ export class UserResponseDto {
    */
   @Expose()
   username: string;
+
+  @Expose()
+  updatedAt: Date;
+
+  @Expose()
+  createdAt: Date;
 }
 
 export class UserCreateBodyDto {
@@ -29,6 +41,10 @@ export class UserCreateBodyDto {
 }
 
 export class UserUpdateBodyDto {
+  @IsOptional()
+  @IsUUID()
+  id!: string;
+
   @IsOptional()
   @IsNotEmpty()
   @IsString()
