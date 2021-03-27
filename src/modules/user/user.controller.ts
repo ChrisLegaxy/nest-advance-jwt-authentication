@@ -7,9 +7,14 @@ import {
   Param,
   ParseUUIDPipe,
   Post,
+  Put,
 } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
-import { UserCreateBodyDto, UserResponseDto } from './dto/user.dto';
+import {
+  UserCreateBodyDto,
+  UserResponseDto,
+  UserUpdateBodyDto,
+} from './dto/user.dto';
 import { UserService } from './user.service';
 
 @Controller('users')
@@ -35,6 +40,18 @@ export class UserController {
     return plainToClass(
       UserResponseDto,
       await this.userService.create(createBodyDto),
+    );
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Put(':id')
+  public async updateUser(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateBodyDto: UserUpdateBodyDto,
+  ) {
+    return plainToClass(
+      UserResponseDto,
+      await this.userService.update(id, updateBodyDto),
     );
   }
 }
