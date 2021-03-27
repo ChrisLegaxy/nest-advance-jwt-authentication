@@ -16,7 +16,7 @@ export class UserController {
 
   @Get()
   public async getUsers() {
-    return await this.userService.getUsers();
+    return await this.userService.find();
   }
 
   @HttpCode(HttpStatus.CREATED)
@@ -24,7 +24,7 @@ export class UserController {
   public async createUser(@Body() createBodyDto: UserCreateBodyDto) {
     return plainToClass(
       UserResponseDto,
-      await this.userService.createUser(createBodyDto),
+      await this.userService.create(createBodyDto),
     );
   }
 }

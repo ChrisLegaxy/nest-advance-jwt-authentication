@@ -6,11 +6,11 @@ import { UserRepository } from './user.repository';
 export class UserService {
   constructor(private userRepository: UserRepository) {}
 
-  public async getUsers() {
+  public async find() {
     return await this.userRepository.find();
   }
 
-  public async createUser(createBodyDto: UserCreateBodyDto) {
+  public async create(createBodyDto: UserCreateBodyDto) {
     if (
       await this.userRepository.findOne({ username: createBodyDto.username })
     ) {
