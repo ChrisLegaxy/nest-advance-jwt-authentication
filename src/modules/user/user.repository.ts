@@ -3,9 +3,9 @@ import { User } from './user.entity';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-  createAndSave(user: Partial<User>) {
-    const newUser = this.create(user);
+  async createAndSave(user: Partial<User>): Promise<User> {
+    const newUser = await this.create(user);
 
-    this.save(newUser);
+    return await this.save(newUser);
   }
 }
