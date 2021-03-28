@@ -7,6 +7,7 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
+import fastifyCookie from 'fastify-cookie';
 
 /**
  * * App Module Import
@@ -32,6 +33,10 @@ class Server {
 
     /** Set global prefix for all api route */
     nestFastifyApplication.setGlobalPrefix('/api/v1');
+
+    nestFastifyApplication.register(fastifyCookie, {
+      secret: 'MY_SUPER_SECRET_COOKIE', // for cookies signature
+    });
 
     /** Run server */
     await nestFastifyApplication.listen(3000, '0.0.0.0');
