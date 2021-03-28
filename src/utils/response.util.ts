@@ -1,5 +1,11 @@
 import { FastifyReply } from 'fastify';
 
+/**
+ * @function setRefreshTokenToHttpOnlyCookie
+ * @description - set refresh_token in response http-only cookie
+ * @param response
+ * @param token
+ */
 export const setRefreshTokenToHttpOnlyCookie = (
   response: FastifyReply,
   token: string,
