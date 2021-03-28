@@ -1,12 +1,20 @@
-import { PassportStrategy } from '@nestjs/passport';
+/**
+ * * Packages Imports
+ */
 import { Strategy } from 'passport-jwt';
-
+import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 
+/**
+ * * User Module Imports
+ */
+import { User } from 'src/modules/user/user.entity';
 import { UserService } from 'src/modules/user/user.service';
 
+/**
+ * * Utils
+ */
 import { cookieExtractor, DecodedToken } from 'src/utils/jwt.util';
-import { User } from 'src/modules/user/user.entity';
 
 @Injectable()
 export class RefreshTokenJwtStrategy extends PassportStrategy(
