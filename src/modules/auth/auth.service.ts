@@ -15,7 +15,6 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { plainToClass } from 'class-transformer';
 
 /**
  * * Local Imports
@@ -27,7 +26,6 @@ import { UserService } from '../user/user.service';
  * * Dtos
  */
 import { LoginBodyDto, RegisterBodyDto } from './dto/auth.dto';
-import { UserResponseDto } from '../user/dto/user.dto';
 
 @Injectable()
 export class AuthService {
@@ -36,15 +34,8 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  public async register(registerBodyDto: RegisterBodyDto) {
-    await this.userService.create(registerBodyDto);
-  }
-
-  public async login(user: User) {
-    return {
-      user: plainToClass(UserResponseDto, user),
-      accessToken: await this.signJwtAccessToken(user),
-    };
+  public async register(registerBodyDto: RegisterBodyDto): Promise<User> {
+    return await this.userService.create(registerBodyDto);
   }
 
   public async validateUser(loginBodyDto: LoginBodyDto): Promise<User> {
@@ -61,7 +52,7 @@ export class AuthService {
     }
   }
 
-  public async signJwtAccessToken(user: User) {
+  public async signJwtAccessToken(user: User): Promise<string> {
     try {
       return await this.jwtService.signAsync(
         {
@@ -80,7 +71,7 @@ export class AuthService {
     }
   }
 
-  public async signJwtRefreshToken(user: User) {
+  public async signJwtRefreshToken(user: User): Promise<string> {
     try {
       return await this.jwtService.signAsync(
         {

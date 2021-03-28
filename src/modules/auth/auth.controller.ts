@@ -51,8 +51,23 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('/register')
-  public async register(@Body() registerBodyDto: RegisterBodyDto) {
-    return await this.authService.register(registerBodyDto);
+  public async register(
+    @Body() registerBodyDto: RegisterBodyDto,
+    @Res() response: FastifyReply,
+  ) {
+    const user = await this.authService.register(registerBodyDto);
+
+    setRefreshTokenToHttpOnlyCookie(
+      response,
+      await this.authService.signJwtRefreshToken(user),
+    );
+
+    return await response.send(
+      plainToClass(AuthResponseDto, {
+        user: plainToClass(UserResponseDto, user),
+        accessToken: await this.authService.signJwtAccessToken(user),
+      }),
+    );
   }
 
   @UseGuards(LocalAuthGuard)
@@ -64,7 +79,10 @@ export class AuthController {
     );
 
     return await response.send(
-      plainToClass(AuthResponseDto, await this.authService.login(user)),
+      plainToClass(AuthResponseDto, {
+        user: plainToClass(UserResponseDto, user),
+        accessToken: await this.authService.signJwtAccessToken(user),
+      }),
     );
   }
 
@@ -86,7 +104,10 @@ export class AuthController {
     );
 
     return await response.send(
-      plainToClass(AuthResponseDto, await this.authService.login(user)),
+      plainToClass(AuthResponseDto, {
+        user: plainToClass(UserResponseDto, user),
+        accessToken: await this.authService.signJwtAccessToken(user),
+      }),
     );
   }
 }
