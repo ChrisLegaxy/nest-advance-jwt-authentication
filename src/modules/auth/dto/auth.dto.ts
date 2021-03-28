@@ -5,10 +5,10 @@ import { UserResponseDto } from 'src/modules/user/dto/user.dto';
 @Exclude()
 export class AuthResponseDto {
   @Expose()
-  user: UserResponseDto;
+  readonly user: UserResponseDto;
 
   @Expose()
-  accessToken: string;
+  readonly accessToken: string;
 }
 
 export class RegisterBodyDto {

@@ -9,23 +9,17 @@ import {
 
 @Exclude()
 export class UserResponseDto {
-  /**
-   * * id - unique identifier
-   */
   @Expose()
-  id: string;
-
-  /**
-   * * username
-   */
-  @Expose()
-  username: string;
+  readonly id: string;
 
   @Expose()
-  updatedAt: Date;
+  readonly username: string;
 
   @Expose()
-  createdAt: Date;
+  readonly updatedAt: Date;
+
+  @Expose()
+  readonly createdAt: Date;
 }
 
 export class UserCreateBodyDto {
