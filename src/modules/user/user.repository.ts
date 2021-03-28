@@ -1,4 +1,11 @@
+/**
+ * * Packages Imports
+ */
 import { EntityRepository, Repository } from 'typeorm';
+
+/**
+ * * Local Imports
+ */
 import { User } from './user.entity';
 
 @EntityRepository(User)
