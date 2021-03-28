@@ -1,3 +1,6 @@
+/**
+ * * Packages Imports
+ */
 import {
   Body,
   Controller,
@@ -11,12 +14,20 @@ import {
   Put,
 } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
+
+/**
+ * * Local Imports
+ */
+import { UserService } from './user.service';
+
+/**
+ * * Dtos
+ */
 import {
   UserCreateBodyDto,
   UserResponseDto,
   UserUpdateBodyDto,
 } from './dto/user.dto';
-import { UserService } from './user.service';
 
 @Controller('users')
 export class UserController {
