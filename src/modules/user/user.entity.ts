@@ -1,4 +1,6 @@
-import { UnauthorizedException } from '@nestjs/common';
+/**
+ * * Packages Imports
+ */
 import {
   BeforeInsert,
   BeforeUpdate,
@@ -8,8 +10,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-
 import * as bcrypt from 'bcryptjs';
+import { UnauthorizedException } from '@nestjs/common';
 
 @Entity()
 export class User {
