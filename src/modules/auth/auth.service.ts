@@ -1,13 +1,24 @@
+/**
+ * * Packages Imports
+ */
 import {
   Injectable,
   ServiceUnavailableException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { UserService } from '../user/user.service';
-import { LoginBodyDto, RegisterBodyDto } from './dto/auth.dto';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '../user/user.entity';
 import { plainToClass } from 'class-transformer';
+
+/**
+ * * Local Imports
+ */
+import { User } from '../user/user.entity';
+import { UserService } from '../user/user.service';
+
+/**
+ * * Dtos
+ */
+import { LoginBodyDto, RegisterBodyDto } from './dto/auth.dto';
 import { UserResponseDto } from '../user/dto/user.dto';
 
 @Injectable()
