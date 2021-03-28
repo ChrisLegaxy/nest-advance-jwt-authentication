@@ -15,6 +15,18 @@ export class UserService {
     return await this.userRepository.find();
   }
 
+  public async findById(id: string): Promise<User> | null {
+    return await this.userRepository.findOne(id);
+  }
+
+  public async findByUsernameOrFail(username: string): Promise<User> {
+    try {
+      return await this.userRepository.findOne({ username });
+    } catch (error) {
+      throw new NotFoundException(error.message);
+    }
+  }
+
   public async findByIdOrFail(id: string): Promise<User> {
     try {
       return await this.userRepository.findOneOrFail(id);
