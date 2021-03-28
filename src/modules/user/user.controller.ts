@@ -18,7 +18,6 @@ import {
   HttpStatus,
   Param,
   ParseUUIDPipe,
-  Post,
   Put,
 } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
