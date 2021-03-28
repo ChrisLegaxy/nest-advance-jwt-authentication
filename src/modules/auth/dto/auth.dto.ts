@@ -1,5 +1,12 @@
+/**
+ * * Packages Imports
+ */
 import { Exclude, Expose } from 'class-transformer';
 import { IsNotEmpty, IsString, MinLength } from 'class-validator';
+
+/**
+ * * User Module Imports
+ */
 import { UserResponseDto } from 'src/modules/user/dto/user.dto';
 
 @Exclude()
