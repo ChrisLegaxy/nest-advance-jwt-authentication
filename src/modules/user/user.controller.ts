@@ -56,8 +56,11 @@ export class UserController {
     );
   }
 
-  @HttpCode(HttpStatus.CREATED)
-  @Post()
+  /**
+   * ! Disabled as we only need registration for now
+   */
+  // @HttpCode(HttpStatus.CREATED)
+  // @Post()
   public async createUser(@Body() createBodyDto: UserCreateBodyDto) {
     return plainToClass(
       UserResponseDto,
