@@ -1,11 +1,22 @@
+/**
+ * * Packages Imports
+ */
 import {
   Injectable,
   NotFoundException,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import { UserCreateBodyDto, UserUpdateBodyDto } from './dto/user.dto';
+
+/**
+ * * Local Imports
+ */
 import { User } from './user.entity';
 import { UserRepository } from './user.repository';
+
+/**
+ * * Dtos
+ */
+import { UserCreateBodyDto, UserUpdateBodyDto } from './dto/user.dto';
 
 @Injectable()
 export class UserService {
