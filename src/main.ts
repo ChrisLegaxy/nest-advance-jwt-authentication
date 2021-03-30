@@ -39,6 +39,12 @@ class Server {
       }),
     );
 
+    /** Enable CORS */
+    nestFastifyApplication.enableCors({
+      origin: ['http://localhost:8080'],
+      credentials: true,
+    });
+
     /** Set global prefix for all api route */
     nestFastifyApplication.setGlobalPrefix('/api/v1');
 
