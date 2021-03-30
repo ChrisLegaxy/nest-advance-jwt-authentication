@@ -9,7 +9,16 @@
 /**
  * * Packages Imports
  */
-import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import { FastifyReply } from 'fastify';
 
@@ -50,6 +59,7 @@ import { AuthResponseDto, RegisterBodyDto } from './dto/auth.dto';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
+  @HttpCode(HttpStatus.CREATED)
   @Post('/register')
   public async register(
     @Body() registerBodyDto: RegisterBodyDto,
@@ -70,6 +80,7 @@ export class AuthController {
     );
   }
 
+  @HttpCode(HttpStatus.OK)
   @UseGuards(LocalAuthGuard)
   @Post('/login')
   public async login(@AuthUser() user: User, @Res() response: FastifyReply) {
@@ -86,12 +97,14 @@ export class AuthController {
     );
   }
 
+  @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
-  @Get('/current_user')
+  @Get('/current')
   public get(@AuthUser() user: User) {
     return plainToClass(UserResponseDto, user);
   }
 
+  @HttpCode(HttpStatus.OK)
   @UseGuards(RefreshTokenJwtAuthGuard)
   @Get('/refresh_token')
   public async refreshToken(
