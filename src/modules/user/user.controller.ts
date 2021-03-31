@@ -19,6 +19,7 @@ import {
   Param,
   ParseUUIDPipe,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 
@@ -26,6 +27,11 @@ import { plainToClass } from 'class-transformer';
  * * Local Imports
  */
 import { UserService } from './user.service';
+
+/**
+ * * Guards
+ */
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 
 /**
  * * Dtos
@@ -41,6 +47,7 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
   @Get()
   public async getUsers() {
     return await this.userService.find();
