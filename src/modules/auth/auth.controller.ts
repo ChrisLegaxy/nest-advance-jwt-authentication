@@ -47,7 +47,10 @@ import { AuthUser } from 'src/decorators/auth-user.decorator';
 /**
  * * Utils
  */
-import { setRefreshTokenToHttpOnlyCookie } from 'src/utils/response.util';
+import {
+  setRefreshTokenToHttpOnlyCookie,
+  terminateRefreshTokenHttpOnlyCookie,
+} from 'src/utils/response.util';
 
 /**
  * * Dtos
@@ -122,5 +125,14 @@ export class AuthController {
         accessToken: await this.authService.signJwtAccessToken(user),
       }),
     );
+  }
+
+  @HttpCode(HttpStatus.ACCEPTED)
+  @UseGuards(JwtAuthGuard)
+  @Get('/logout')
+  public logout(@Res() response: FastifyReply) {
+    terminateRefreshTokenHttpOnlyCookie(response);
+
+    return response.send();
   }
 }
