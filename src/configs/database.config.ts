@@ -11,4 +11,5 @@ export default registerAs('database', () => ({
   database: process.env.DATABASE_NAME || 'advance_auth',
   entities: [join(__dirname, '../**/*.entity.js')],
   synchronize: true,
+  ssl: process.env.DATABASE_SSL === 'true' || false,
 }));
