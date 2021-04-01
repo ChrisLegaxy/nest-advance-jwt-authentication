@@ -53,7 +53,7 @@ class Server {
     });
 
     /** Run server */
-    await nestFastifyApplication.listen(80, '0.0.0.0');
+    await nestFastifyApplication.listen(3000, '0.0.0.0');
   }
 }
 
