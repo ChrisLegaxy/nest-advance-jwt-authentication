@@ -23,20 +23,19 @@ import { UserModule } from './modules/user/user.module';
  */
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
+import { ConfigModule } from '@nestjs/config';
+import { TypeOrmConfigService } from './services/typeorm-config.service';
+
+import databaseConfig from './configs/database.config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      load: [databaseConfig],
+    }),
     TypeOrmModule.forRootAsync({
-      useFactory: () => ({
-        type: 'postgres',
-        host: 'localhost',
-        port: 5432,
-        username: 'postgres',
-        password: 'root',
-        database: 'advance_auth',
-        entities: [__dirname + '/**/*.entity.js'],
-        synchronize: true,
-      }),
+      imports: [ConfigModule],
+      useClass: TypeOrmConfigService,
     }),
     AuthModule,
     UserModule,
