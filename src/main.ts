@@ -44,7 +44,10 @@ class Server {
 
     /** Enable CORS */
     nestFastifyApplication.enableCors({
-      origin: ['http://localhost:8080'],
+      origin: [
+        'https://chrisvan-nest-vue-advance-auth.netlify.app',
+        'http://localhost:8080',
+      ],
       credentials: true,
     });
 
@@ -54,8 +57,6 @@ class Server {
     nestFastifyApplication.register(fastifyCookie, {
       secret: 'MY_SUPER_SECRET_COOKIE', // for cookies signature
     });
-
-    console.log(configService.get('app').port);
 
     /** Run server */
     await nestFastifyApplication.listen(
