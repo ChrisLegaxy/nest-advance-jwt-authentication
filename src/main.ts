@@ -10,6 +10,7 @@
  * * Packages Imports
  */
 import { HttpStatus, ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import {
   FastifyAdapter,
@@ -29,6 +30,8 @@ class Server {
       AppModule,
       new FastifyAdapter(),
     );
+
+    const configService = await nestFastifyApplication.get(ConfigService);
 
     nestFastifyApplication.useGlobalPipes(
       new ValidationPipe({
@@ -52,8 +55,13 @@ class Server {
       secret: 'MY_SUPER_SECRET_COOKIE', // for cookies signature
     });
 
+    console.log(configService.get('app').port);
+
     /** Run server */
-    await nestFastifyApplication.listen(3000, '0.0.0.0');
+    await nestFastifyApplication.listen(
+      configService.get('app').port,
+      '0.0.0.0',
+    );
   }
 }
 
