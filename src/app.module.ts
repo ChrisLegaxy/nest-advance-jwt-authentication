@@ -26,12 +26,13 @@ import { AppController } from './app.controller';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmConfigService } from './services/typeorm-config.service';
 
+import appConfig from './configs/app.config';
 import databaseConfig from './configs/database.config';
-
+import databaseConfigProd from './configs/database-prod.config';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [databaseConfig],
+      load: [appConfig, databaseConfigProd, databaseConfig],
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
